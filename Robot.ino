@@ -34,7 +34,7 @@ followSide FollowingSide = followSide(left);
 steps CurrentStep = steps(pushbak);
 
 void setup() {
-  
+
   // Outputs
   pinMode(Trig, OUTPUT);
   pinMode(LeftWheel, OUTPUT);
@@ -65,9 +65,7 @@ void setup() {
 }
 
 void loop() {
-  OpenMaw();
-  CloseMaw();
-  //StepThrough();
+  StepThrough();
   /*TurnRight90();
   delay(4000);
   TurnLeft90();
@@ -76,15 +74,15 @@ void loop() {
 
 void StepThrough() {
   switch(CurrentStep) {
-    
+
     case pushbak:
       Pushbak();
     break;
-    
+
     case inbound:
       Inbound();
     break;
-    
+
     case outbound:
       Outbound();
     break;
@@ -95,9 +93,9 @@ void StepThrough() {
       digitalWrite(Blue, LOW);
       Stop();
     break;
-    
+
     default:
-      // We dun fucked up
+      // We screwed up
     break;
   }
 }
@@ -107,14 +105,14 @@ void Pushbak() {
   while(getDistance() < 27) {
     Forward();
   }
-  
+
   // Turn
   if (FollowingSide == followSide(left)) {
     while(getDistance() < 100)  TurnRight90();
   } else {
      while(getDistance() < 100) TurnLeft90();
   }
-  
+
   Stop();
   delay(2000);
   // Start inbound
@@ -155,7 +153,7 @@ void Outbound() {
     Stop();
     CurrentStep = steps(completed);
   }
-      
+
   if ( digitalRead(LeftSwitch) == LOW && digitalRead(RightSwitch) == LOW) {
     if (FollowingSide == followSide(right)) {
       digitalWrite(Blue, HIGH);
@@ -184,14 +182,14 @@ void retrieveCube() {
 
   Stop();
   OpenMaw();
-  
+
   while(getDistance() < 35) {
     Forward();
   }
-  
+
   delay(500);
   CloseMaw();
-  
+
   while(getDistance() > 2) {
     Backward();
   }
@@ -221,4 +219,3 @@ long getDistance() {
   digitalWrite(Trig, LOW);
   return (pulseIn(Echo, HIGH) / 2) / 29.1;
 }
-
